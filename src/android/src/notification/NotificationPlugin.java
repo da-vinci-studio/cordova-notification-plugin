@@ -86,11 +86,17 @@ public class NotificationPlugin extends CordovaPlugin {
     }
 
     if (action.equals("setProgress")) {
+      int progress = 0;
+
       try {
-        this.setProgress(args.getInt(0));
+        progress = args.getInt(0);
       } catch (JSONException e) {
-        this.setProgress();
+        this.hideProgress();
+
+        return;
       }
+
+      this.setProgress(progress);
 
       return true;
     }
@@ -171,7 +177,7 @@ public class NotificationPlugin extends CordovaPlugin {
     return;
   }
 
-  private void setProgress() {
+  private void hideProgress() {
     mNotificationConfig.progressVisibility = false;
   }
 
