@@ -38,13 +38,11 @@ public class NotificationPlugin extends CordovaPlugin {
 
   public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) {
     if (action.equals("setTitle")) {
-      String title;
+      String title = "";
 
       try {
         title = args.getString(0);
-      } catch (JSONException e) {
-        title = ""
-      }
+      } catch (JSONException e) {}
 
       this.setTitle(title);
 
@@ -52,13 +50,11 @@ public class NotificationPlugin extends CordovaPlugin {
     }
 
     if (action.equals("setText")) {
-      String text;
+      String text = "";
       
       try {
         text = args.getString(0);
-      } catch (JSONException e) {
-        text = ""
-      }
+      } catch (JSONException e) {}
 
       this.setText(text);
 
@@ -66,13 +62,11 @@ public class NotificationPlugin extends CordovaPlugin {
     }
 
     if (action.equals("setTicker")) {
-      String ticker;
+      String ticker = "";
       
       try {
         ticker = args.getString(0);
-      } catch (JSONException e) {
-        ticker = ""
-      }
+      } catch (JSONException e) {}
 
       this.setTicker(ticker);
 
