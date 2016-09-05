@@ -100,7 +100,7 @@ public class NotificationPlugin extends CordovaPlugin {
   }
 
   private void setTitle(String title) throws JSONException {
-    if (title == "null") {
+    if ("null" == title) {
       mNotificationConfig.title = "";
 
       return;
@@ -110,7 +110,7 @@ public class NotificationPlugin extends CordovaPlugin {
   }
 
   private void setText(String text) throws JSONException {
-    if (text == "null") {
+    if ("null" == text) {
       mNotificationConfig.text = "";
 
       return;
@@ -120,7 +120,7 @@ public class NotificationPlugin extends CordovaPlugin {
   }
 
   private void setTicker(String ticker) throws JSONException {
-    if (ticker == "null") {
+    if ("null" == ticker) {
       mNotificationConfig.ticker = "";
 
       return;
@@ -156,7 +156,7 @@ public class NotificationPlugin extends CordovaPlugin {
 
   private void show() throws JSONException {
     String ticker = mNotificationConfig.ticker;
-    if (mNotificationConfig.ticker == "") {
+    if ("" == mNotificationConfig.ticker) {
       ticker = mNotificationConfig.title;
     } 
 
