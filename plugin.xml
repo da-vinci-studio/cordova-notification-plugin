@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin
+    xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="cordova-notification-plugin"
+    version="0.0.1"
+>
+    <name>Da Vinci Studio Notification Plugin</name>
+    <description>Da Vinci Studio Notification Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords></keywords>
+
+    <repo></repo>
+    <issue></issue>
+
+    <engines>
+        <engine name="cordova-android" version=">=4.0.0-dev" />
+    </engines>
+
+    <js-module src="www/notification.js" name="Notification">
+        <clobbers target="Notification" />
+    </js-module>
+
+    <platform name="android">
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="NotificationPlugin" >
+                <param name="android-package" value="com.davinci.studio.notification.NotificationPlugin"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/src/notification/NotificationPlugin.java" target-dir="src/com/davinci/studio/notification" />
+
+    </platform>
+
+    <info></info>
+
+</plugin>
