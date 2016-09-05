@@ -87,7 +87,7 @@ public class NotificationPlugin extends CordovaPlugin {
       } catch (JSONException e) {
         this.hideProgress();
 
-        return;
+        return true;
       }
 
       this.setProgress(progress);
@@ -114,7 +114,7 @@ public class NotificationPlugin extends CordovaPlugin {
         autoCancel = args.getBoolean(0);
       } catch (JSONException e) {}
 
-      this.setOngoing(autoCancel);
+      this.setAutoCancel(autoCancel);
 
       return true;
     }
