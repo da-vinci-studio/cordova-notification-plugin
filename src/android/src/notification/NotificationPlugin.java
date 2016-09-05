@@ -13,7 +13,6 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaInterface;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -37,21 +36,45 @@ public class NotificationPlugin extends CordovaPlugin {
     mNotificationConfig = new NotificationConfig();
   }
 
-  public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+  public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) {
     if (action.equals("setTitle")) {
-      this.setTitle(args.getString(0));
+      String title;
+
+      try {
+        title = args.getString(0);
+      } catch (JSONException e) {
+        title = ""
+      }
+
+      this.setTitle(title);
 
       return true;
     }
 
     if (action.equals("setText")) {
-      this.setText(args.getString(0));
+      String text;
+      
+      try {
+        text = args.getString(0);
+      } catch (JSONException e) {
+        text = ""
+      }
+
+      this.setText(text);
 
       return true;
     }
 
     if (action.equals("setTicker")) {
-      this.setTicker(args.getString(0));
+      String ticker;
+      
+      try {
+        ticker = args.getString(0);
+      } catch (JSONException e) {
+        ticker = ""
+      }
+
+      this.setTicker(ticker);
 
       return true;
     }
@@ -73,13 +96,25 @@ public class NotificationPlugin extends CordovaPlugin {
     }
 
     if (action.equals("setOngoing")) {
-      this.setOngoing(args.getBoolean(0));
+      boolean ongoing = false;
+
+      try {
+        ongoing = args.getBoolean(0);
+      } catch (JSONException e) {}
+
+      this.setOngoing(ongoing);
 
       return true;
     }
 
     if (action.equals("setAutoCancel")) {
-      this.setAutoCancel(args.getBoolean(0));
+      boolean autoCancel = false;
+
+      try {
+        autoCancel = args.getBoolean(0);
+      } catch (JSONException e) {}
+
+      this.setOngoing(autoCancel);
 
       return true;
     }
@@ -99,7 +134,7 @@ public class NotificationPlugin extends CordovaPlugin {
     return false;
   }
 
-  private void setTitle(String title) throws JSONException {
+  private void setTitle(String title) {
     if ("null" == title) {
       mNotificationConfig.title = "";
 
@@ -109,7 +144,7 @@ public class NotificationPlugin extends CordovaPlugin {
     mNotificationConfig.title = title;
   }
 
-  private void setText(String text) throws JSONException {
+  private void setText(String text) {
     if ("null" == text) {
       mNotificationConfig.text = "";
 
@@ -119,7 +154,7 @@ public class NotificationPlugin extends CordovaPlugin {
     mNotificationConfig.text = text;
   }
 
-  private void setTicker(String ticker) throws JSONException {
+  private void setTicker(String ticker) {
     if ("null" == ticker) {
       mNotificationConfig.ticker = "";
 
@@ -129,32 +164,32 @@ public class NotificationPlugin extends CordovaPlugin {
     mNotificationConfig.ticker = ticker;
   }
 
-  private void setInfinityProgress() throws JSONException {
+  private void setInfinityProgress() {
     mNotificationConfig.progressVisibility = true;
     mNotificationConfig.infinityProgress = true;
 
     return;
   }
 
-  private void setProgress() throws JSONException {
+  private void setProgress() {
     mNotificationConfig.progressVisibility = false;
   }
 
-  private void setProgress(int progress) throws JSONException {
+  private void setProgress(int progress) {
     mNotificationConfig.progressVisibility = true;
     mNotificationConfig.progressValue = progress;
     mNotificationConfig.infinityProgress = false;
   }
 
-  private void setOngoing(boolean ongoing) throws JSONException {
+  private void setOngoing(boolean ongoing) {
     mNotificationConfig.ongoing = ongoing;
   }
 
-  private void setAutoCancel(boolean autoCancel) throws JSONException {
+  private void setAutoCancel(boolean autoCancel) {
     mNotificationConfig.autoCancel = autoCancel;
   }
 
-  private void show() throws JSONException {
+  private void show() {
     String ticker = mNotificationConfig.ticker;
     if ("" == mNotificationConfig.ticker) {
       ticker = mNotificationConfig.title;
