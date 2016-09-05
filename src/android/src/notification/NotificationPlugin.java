@@ -212,9 +212,8 @@ public class NotificationPlugin extends CordovaPlugin {
 
     mBuilder.setSmallIcon(mActivity.getApplicationInfo().icon);
 
-    String packageName = mActivity.getPackageName();
     Intent intent = mActivity.getPackageManager()
-      .getLaunchIntentForPackage(packageName);
+      .getLaunchIntentForPackage(mActivity.getPackageName());
       
     if (intent != null) {
       PendingIntent contentIntent = PendingIntent.getActivity(
