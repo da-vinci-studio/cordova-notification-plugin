@@ -39,41 +39,19 @@ public class NotificationPlugin extends CordovaPlugin {
 
   public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
     if (action.equals("setTitle")) {
-      String title = args.getString(0);
-
-      if (title != "null") {
-        this.setTitle(title);
-
-        return true;
-      }
-
-      this.setTitle();
+      this.setTitle(args.getString(0));
 
       return true;
     }
 
     if (action.equals("setText")) {
-      String text = args.getString(0);
-
-      if (text != "null") {
-        this.setText(text);
-
-        return true;
-      }
-
-      this.setText();
+      this.setText(args.getString(0));
 
       return true;
     }
 
     if (action.equals("setTicker")) {
-      if (args.getString(0) != "null") {
-        this.setTicker(args.getString(0));
-
-        return true;
-      }
-
-      this.setTicker();
+      this.setTicker(args.getString(0));
 
       return true;
     }
@@ -121,27 +99,33 @@ public class NotificationPlugin extends CordovaPlugin {
     return false;
   }
 
-  private void setTitle() {
-    mNotificationConfig.title = "";
-  }
-
   private void setTitle(String title) throws JSONException {
+    if (title == "null") {
+      mNotificationConfig.title = "";
+
+      return;
+    }
+
     mNotificationConfig.title = title;
   }
 
-  private void setText() {
-    mNotificationConfig.text = "";
-  }
-
   private void setText(String text) throws JSONException {
+    if (text == "null") {
+      mNotificationConfig.text = "";
+
+      return;
+    }
+
     mNotificationConfig.text = text;
   }
 
-  private void setTicker() {
-    mNotificationConfig.ticker = "";
-  }
-
   private void setTicker(String ticker) throws JSONException {
+    if (ticker == "null") {
+      mNotificationConfig.ticker = "";
+
+      return;
+    }
+
     mNotificationConfig.ticker = ticker;
   }
 
@@ -158,7 +142,7 @@ public class NotificationPlugin extends CordovaPlugin {
 
   private void setProgress(int progress) throws JSONException {
     mNotificationConfig.progressVisibility = true;
-    mNotificationConfig.progress = progress;
+    mNotificationConfig.progressValue = progress;
     mNotificationConfig.infinityProgress = false;
   }
 
@@ -187,8 +171,8 @@ public class NotificationPlugin extends CordovaPlugin {
       mBuilder.setProgress(0, 0, false);
     }
 
-    if (mNotificationConfig.progressVisibility && mNotificationConfig.progress >= 0) {
-      mBuilder.setProgress(100, mNotificationConfig.progress, mNotificationConfig.infinityProgress);
+    if (mNotificationConfig.progressVisibility && mNotificationConfig.progressValue >= 0) {
+      mBuilder.setProgress(100, mNotificationConfig.progressValue, mNotificationConfig.infinityProgress);
     }
 
     mBuilder.setSmallIcon(mActivity.getApplicationInfo().icon);
