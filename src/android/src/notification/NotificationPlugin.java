@@ -199,7 +199,7 @@ public class NotificationPlugin extends CordovaPlugin {
     String ticker = mNotificationConfig.ticker;
     if ("" == mNotificationConfig.ticker) {
       ticker = mNotificationConfig.title;
-    } 
+    }
 
     mBuilder
       .setContentTitle(mNotificationConfig.title)
