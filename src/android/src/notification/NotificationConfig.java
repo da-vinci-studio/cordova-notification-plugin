@@ -1,4 +1,4 @@
-package com.davinci.studio.notification;
+package com.davinci_studio.notification;
 
 public class NotificationConfig {
   public String title = "";

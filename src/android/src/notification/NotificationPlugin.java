@@ -1,4 +1,4 @@
-package com.davinci.studio.notification;
+package com.davinci_studio.notification;
 
 import android.app.Activity;
 import android.app.Notification;
