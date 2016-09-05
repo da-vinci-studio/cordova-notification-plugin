@@ -106,5 +106,15 @@ Notification.prototype.dismiss = function () {
   );
 };
 
+Notification.prototype.reset = function () {
+  exec(
+    null,
+    null,
+    'NotificationPlugin',
+    'reset',
+    []
+  );
+};
+
 var notification = new Notification();
 module.exports = notification;

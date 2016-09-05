@@ -131,6 +131,12 @@ public class NotificationPlugin extends CordovaPlugin {
       return true;
     }
 
+    if (action.equals("reset")) {
+      mNotificationConfig = new NotificationConfig();
+
+      return true;
+    }
+
     return false;
   }
 
