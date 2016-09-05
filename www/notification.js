@@ -70,6 +70,8 @@ Notification.prototype.setOngoing = function () {
     'setOngoing',
     []
   );
+
+  return this;
 };
 
 Notification.prototype.setAutoCancel = function () {
@@ -80,6 +82,8 @@ Notification.prototype.setAutoCancel = function () {
     'setAutoCancel',
     []
   );
+
+  return this;
 };
 
 Notification.prototype.show = function () {

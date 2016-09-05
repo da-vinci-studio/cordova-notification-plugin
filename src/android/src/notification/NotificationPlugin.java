@@ -1,4 +1,4 @@
-package com.davinci.medica.notification;
+package com.davinci.studio.notification;
 
 import android.app.Activity;
 import android.app.Notification;
@@ -24,8 +24,7 @@ public class NotificationPlugin extends CordovaPlugin {
   private Activity mActivity;
   private NotificationManager mNotifyManager;
   private Notification.Builder mBuilder;
-  private JSONObject mData = new JSONObject();
-  private int mNumber = 1;
+  private NotificationConfig mNotificationConfig;
   
   public NotificationPlugin() {}
 
@@ -35,6 +34,7 @@ public class NotificationPlugin extends CordovaPlugin {
     mActivity = cordova.getActivity();
     mNotifyManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
     mBuilder = new Notification.Builder(mActivity);
+    mNotificationConfig = new NotificationConfig();
   }
 
   public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -122,71 +122,73 @@ public class NotificationPlugin extends CordovaPlugin {
   }
 
   private void setTitle() {
-    mData.remove("title");
+    mNotificationConfig.title = "";
   }
 
   private void setTitle(String title) throws JSONException {
-    mData.put("title", title);
+    mNotificationConfig.title = title;
   }
 
   private void setText() {
-    mData.remove("text");
+    mNotificationConfig.text = "";
   }
 
   private void setText(String text) throws JSONException {
-    mData.put("text", text);
+    mNotificationConfig.text = text;
   }
 
   private void setTicker() {
-    mData.remove("ticker");
+    mNotificationConfig.ticker = "";
   }
 
   private void setTicker(String ticker) throws JSONException {
-    mData.put("ticker", ticker);
+    mNotificationConfig.ticker = ticker;
   }
 
   private void setInfinityProgress() throws JSONException {
-    mData.put("infinityProgress", true);
+    mNotificationConfig.progressVisibility = true;
+    mNotificationConfig.infinityProgress = true;
 
     return;
   }
 
   private void setProgress() throws JSONException {
-    mData.remove("progress");
-    mData.remove("infinityProgress");
+    mNotificationConfig.progressVisibility = false;
   }
 
   private void setProgress(int progress) throws JSONException {
-    mData.put("progress", progress);
-    mData.put("infinityProgress", false);
+    mNotificationConfig.progressVisibility = true;
+    mNotificationConfig.progress = progress;
+    mNotificationConfig.infinityProgress = false;
   }
 
   private void setOngoing(boolean ongoing) throws JSONException {
-    mData.put("ongoing", ongoing);
+    mNotificationConfig.ongoing = ongoing;
   }
 
   private void setAutoCancel(boolean autoCancel) throws JSONException {
-    mData.put("autoCancel", autoCancel);
+    mNotificationConfig.autoCancel = autoCancel;
   }
 
   private void show() throws JSONException {
-    String title = mData.optString("title", "");
+    String ticker = mNotificationConfig.ticker;
+    if (mNotificationConfig.ticker == "") {
+      ticker = mNotificationConfig.title;
+    } 
 
     mBuilder
-      .setContentTitle(title)
-      .setContentText(mData.optString("text", ""))
-      .setTicker(mData.optString("ticker", title))
-      .setOngoing(mData.optBoolean("ongoing", false))
-      .setAutoCancel(mData.optBoolean("autoCancel", true));
+      .setContentTitle(mNotificationConfig.title)
+      .setContentText(mNotificationConfig.text)
+      .setTicker(ticker)
+      .setOngoing(mNotificationConfig.ongoing)
+      .setAutoCancel(mNotificationConfig.autoCancel);
 
-    Boolean infinityProgress = mData.optBoolean("infinityProgress", false);
-    int progress = mData.optInt("progress", -1);
-
-    if (progress == -1) {
+    if (!mNotificationConfig.progressVisibility) {
       mBuilder.setProgress(0, 0, false);
     }
-    if (progress >= 0) {
-      mBuilder.setProgress(100, progress, infinityProgress);
+
+    if (mNotificationConfig.progressVisibility && mNotificationConfig.progress >= 0) {
+      mBuilder.setProgress(100, mNotificationConfig.progress, mNotificationConfig.infinityProgress);
     }
 
     mBuilder.setSmallIcon(mActivity.getApplicationInfo().icon);
@@ -194,6 +196,7 @@ public class NotificationPlugin extends CordovaPlugin {
     String packageName = mActivity.getPackageName();
     Intent intent = mActivity.getPackageManager()
       .getLaunchIntentForPackage(packageName);
+      
     if (intent != null) {
       PendingIntent contentIntent = PendingIntent.getActivity(
         mActivity,

@@ -30,6 +30,7 @@
         </config-file>
 
         <source-file src="src/android/src/notification/NotificationPlugin.java" target-dir="src/com/davinci/studio/notification" />
+        <source-file src="src/android/src/notification/NotificationConfig.java" target-dir="src/com/davinci/studio/notification" />
 
     </platform>
 
