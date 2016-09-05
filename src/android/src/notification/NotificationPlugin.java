@@ -22,8 +22,8 @@ public class NotificationPlugin extends CordovaPlugin {
   private static final int NOTIFICATION_ID = 1;
 
   private Activity mActivity;
-	private NotificationManager mNotifyManager;
-	private Notification.Builder mBuilder;
+  private NotificationManager mNotifyManager;
+  private Notification.Builder mBuilder;
   private JSONObject mData = new JSONObject();
   private int mNumber = 1;
   
